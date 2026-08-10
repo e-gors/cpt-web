@@ -41,6 +41,14 @@ npm run dev
 
 The app will be available locally in the browser via the Vite dev server URL.
 
+## Features Implemented
+
+- filters (search, status, priority, sort, and clear)
+- create new project
+- update existing project
+- delete existing project
+- show/display total numbers of project group by status
+
 ## Assumptions made
 
 - Created mockup data at first for easily evaluating the design and layouts.
