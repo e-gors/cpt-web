@@ -1,5 +1,6 @@
 import { baseApi } from "@/api/baseApi";
 import type { Priority, Project, Status } from "@/types";
+import type { ProjectFormValues } from "@/validators/project.validator";
 
 /* ----------------------------------------
    TYPES
@@ -33,10 +34,31 @@ export const projectsApi = baseApi.injectEndpoints({
             ]
           : [{ type: "Project", id: "LIST" }],
     }),
+    createProject: builder.mutation<void, ProjectFormValues>({
+      query: (data) => ({
+        url: "/projects",
+        method: "POST",
+        body: data,
+      }),
+    }),
+    updateProject: builder.mutation<
+      void,
+      { id: number; data: ProjectFormValues }
+    >({
+      query: ({ id, data }) => ({
+        url: `/projects/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+    }),
   }),
 });
 
 /* ----------------------------------------
    AUTO-GENERATED HOOKS
 -----------------------------------------*/
-export const { useGetProjectsQuery } = projectsApi;
+export const {
+  useGetProjectsQuery,
+  useCreateProjectMutation,
+  useUpdateProjectMutation,
+} = projectsApi;
