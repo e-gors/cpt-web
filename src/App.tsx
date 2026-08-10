@@ -14,10 +14,10 @@ export default function App() {
   const [editing, setEditing] = useState<Project | null | undefined>(undefined);
   const [deletingId, setDeletingId] = useState<number | null>(null);
 
-  // 🔍 Filters
+  // Filters
   const filters = useProjectFilters();
 
-  // ✅ SINGLE SOURCE OF DATA
+  // SINGLE SOURCE OF DATA
   const {
     projects,
     stats,
@@ -28,7 +28,7 @@ export default function App() {
     deleteProject,
   } = useProjects(filters.queryParams);
 
-  // ➕ CREATE / UPDATE
+  // CREATE / UPDATE
   async function handleSave(data: Omit<Project, "id">) {
     if (editing) {
       await updateProject({
@@ -43,7 +43,7 @@ export default function App() {
     refetch(); // Refresh the list after saving
   }
 
-  // ❌ DELETE
+  //  DELETE
   async function handleDelete() {
     if (!deletingId) return;
 
@@ -58,7 +58,7 @@ export default function App() {
 
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-6">
-      {/* 🧭 Header */}
+      {/* Header */}
       <header className="flex justify-between items-center border-b border-neutral-800 pb-4">
         <div>
           <span className="text-xs tracking-widest text-lime-400 uppercase">
@@ -72,13 +72,13 @@ export default function App() {
         </button>
       </header>
 
-      {/* 📊 Stats */}
+      {/* Stats */}
       <ProjectStats {...stats} />
 
-      {/* 🔍 Filters */}
+      {/* Filters */}
       <ProjectFilters {...filters} />
 
-      {/* 📋 Project List */}
+      {/* Project List */}
       <ProjectList
         projects={projects}
         isLoading={isLoading}
@@ -86,16 +86,17 @@ export default function App() {
         onDelete={setDeletingId}
       />
 
-      {/* 📝 Form Modal */}
+      {/* Form Modal */}
       {editing !== undefined && (
         <ProjectForm
           project={editing}
           onSave={handleSave}
+          isLoading={isLoading}
           onClose={() => setEditing(undefined)}
         />
       )}
 
-      {/* ⚠️ Delete Confirmation */}
+      {/* Delete Confirmation */}
       {deletingProject && (
         <ConfirmDialog
           project={deletingProject.project}

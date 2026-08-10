@@ -2,11 +2,6 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import {
-  useCreateProjectMutation,
-  useUpdateProjectMutation,
-} from "@/api/features/projects/projects.api";
-
 import type { Project } from "../types";
 import { STATUSES, PRIORITIES } from "../types";
 
@@ -14,18 +9,22 @@ import {
   projectSchema,
   type ProjectFormValues,
 } from "@/validators/project.validator";
+import { CustomField } from "./CustomField";
 
 interface Props {
   project?: Project | null;
+  onSave: (data: ProjectFormValues) => void;
   onClose: () => void;
+  isLoading?: boolean;
 }
 
-export default function ProjectForm({ project, onClose }: Props) {
+export default function ProjectForm({
+  project,
+  onSave,
+  onClose,
+  isLoading,
+}: Props) {
   const isEdit = !!project;
-
-  const [createProject, { isLoading: creating }] = useCreateProjectMutation();
-
-  const [updateProject, { isLoading: updating }] = useUpdateProjectMutation();
 
   const {
     register,
@@ -72,29 +71,19 @@ export default function ProjectForm({ project, onClose }: Props) {
 
   const onSubmit = async (data: ProjectFormValues) => {
     try {
-      if (isEdit && project) {
-        await updateProject({
-          id: project.id,
-          data,
-        }).unwrap();
-      } else {
-        await createProject(data).unwrap();
-      }
-
+      await onSave(data); // only call parent
       onClose();
     } catch (err) {
       console.error("Submit failed:", err);
     }
   };
 
-  const loading = creating || updating;
-
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
       style={{ background: "rgba(0,0,0,0.85)" }}
       onClick={(e) => {
-        if (e.target === e.currentTarget && !loading) {
+        if (e.target === e.currentTarget && !isLoading) {
           onClose();
         }
       }}
@@ -127,18 +116,18 @@ export default function ProjectForm({ project, onClose }: Props) {
           <button
             type="button"
             onClick={onClose}
-            disabled={loading}
+            disabled={isLoading}
             style={{
               fontFamily: "var(--font-mono)",
               fontSize: "0.75rem",
               color: "#555",
               background: "none",
               border: "none",
-              cursor: loading ? "not-allowed" : "pointer",
-              opacity: loading ? 0.5 : 1,
+              cursor: isLoading ? "not-allowed" : "pointer",
+              opacity: isLoading ? 0.5 : 1,
             }}
             onMouseEnter={(e) => {
-              if (!loading) {
+              if (!isLoading) {
                 e.currentTarget.style.color = "#efefef";
               }
             }}
@@ -155,47 +144,57 @@ export default function ProjectForm({ project, onClose }: Props) {
           className="flex flex-col gap-4 px-6 py-5"
         >
           {/* Client Name */}
-          <Field label="CLIENT NAME" error={errors.client?.message} required>
+          <CustomField
+            label="CLIENT NAME"
+            error={errors.client?.message}
+            required
+          >
             <input
               {...register("client")}
               className={`field-input${errors.client ? " field-error" : ""}`}
               placeholder="e.g. Meridian Capital"
-              disabled={loading}
+              disabled={isLoading}
             />
-          </Field>
-
+          </CustomField>
           {/* Project Name */}
-          <Field label="PROJECT NAME" error={errors.project?.message} required>
+          <CustomField
+            label="PROJECT NAME"
+            error={errors.project?.message}
+            required
+          >
             <input
               {...register("project")}
               className={`field-input${errors.project ? " field-error" : ""}`}
               placeholder="e.g. Brand Identity Refresh"
-              disabled={loading}
+              disabled={isLoading}
             />
-          </Field>
-
+          </CustomField>
           {/* Description */}
-          <Field label="DESCRIPTION" error={errors.description?.message}>
+          required
+          <CustomField
+            label="DESCRIPTION"
+            error={errors.description?.message}
+            required
+          >
             <textarea
               {...register("description")}
               className="field-input"
               placeholder="Brief project description..."
               rows={3}
-              disabled={loading}
+              disabled={isLoading}
               style={{
                 resize: "vertical",
                 fontFamily: "var(--font-sans)",
               }}
             />
-          </Field>
-
+          </CustomField>
           {/* Status + Priority */}
           <div className="grid grid-cols-2 gap-4">
-            <Field label="STATUS" error={errors.status?.message} required>
+            <CustomField label="STATUS" error={errors.status?.message} required>
               <select
                 {...register("status")}
                 className={`field-input${errors.status ? " field-error" : ""}`}
-                disabled={loading}
+                disabled={isLoading}
               >
                 {STATUSES.map((status) => (
                   <option key={status} value={status}>
@@ -203,15 +202,19 @@ export default function ProjectForm({ project, onClose }: Props) {
                   </option>
                 ))}
               </select>
-            </Field>
+            </CustomField>
 
-            <Field label="PRIORITY" error={errors.priority?.message} required>
+            <CustomField
+              label="PRIORITY"
+              error={errors.priority?.message}
+              required
+            >
               <select
                 {...register("priority")}
                 className={`field-input${
                   errors.priority ? " field-error" : ""
                 }`}
-                disabled={loading}
+                disabled={isLoading}
               >
                 {PRIORITIES.map((priority) => (
                   <option key={priority} value={priority}>
@@ -219,32 +222,38 @@ export default function ProjectForm({ project, onClose }: Props) {
                   </option>
                 ))}
               </select>
-            </Field>
+            </CustomField>
           </div>
-
           {/* Dates */}
           <div className="grid grid-cols-2 gap-4">
-            <Field label="START DATE" error={errors.startDate?.message}>
+            <CustomField
+              label="START DATE"
+              error={errors.startDate?.message}
+              required
+            >
               <input
                 type="date"
                 {...register("startDate")}
                 className={`field-input${
                   errors.startDate ? " field-error" : ""
                 }`}
-                disabled={loading}
+                disabled={isLoading}
               />
-            </Field>
+            </CustomField>
 
-            <Field label="DUE DATE" error={errors.dueDate?.message}>
+            <CustomField
+              label="DUE DATE"
+              error={errors.dueDate?.message}
+              required
+            >
               <input
                 type="date"
                 {...register("dueDate")}
                 className={`field-input${errors.dueDate ? " field-error" : ""}`}
-                disabled={loading}
+                disabled={isLoading}
               />
-            </Field>
+            </CustomField>
           </div>
-
           {/* Actions */}
           <div
             className="flex justify-end gap-2 pt-2 border-t"
@@ -254,13 +263,13 @@ export default function ProjectForm({ project, onClose }: Props) {
               type="button"
               className="btn-ghost"
               onClick={onClose}
-              disabled={loading}
+              disabled={isLoading}
             >
               CANCEL
             </button>
 
-            <button type="submit" className="btn-primary" disabled={loading}>
-              {loading
+            <button type="submit" className="btn-primary" disabled={isLoading}>
+              {isLoading
                 ? "SAVING..."
                 : isEdit
                   ? "SAVE CHANGES"
@@ -270,49 +279,5 @@ export default function ProjectForm({ project, onClose }: Props) {
         </form>
       </div>
     </div>
-  );
-}
-
-function Field({
-  label,
-  error,
-  required,
-  children,
-}: {
-  label: string;
-  error?: string;
-  required?: boolean;
-  children: React.ReactNode;
-}) {
-  return (
-    <label
-      className="flex flex-col gap-1"
-      style={{
-        fontFamily: "var(--font-mono)",
-        fontSize: "0.65rem",
-        color: "#555",
-        letterSpacing: "0.1em",
-      }}
-    >
-      <span>
-        {label}
-        {required && <span style={{ color: "#d4ff00" }}> *</span>}
-      </span>
-
-      {children}
-
-      {error && (
-        <span
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: "0.65rem",
-            color: "#f87171",
-            letterSpacing: "0.02em",
-          }}
-        >
-          {error}
-        </span>
-      )}
-    </label>
   );
 }
