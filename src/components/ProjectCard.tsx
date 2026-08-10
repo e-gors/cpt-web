@@ -5,7 +5,7 @@ import { STATUS_COLORS, PRIORITY_COLORS } from "../types";
 interface ProjectCardProps {
   project: Project;
   onEdit: (project: Project) => void;
-  onDelete: (id: string) => void;
+  onDelete: (id: number) => void;
 }
 
 export default function ProjectCard({
