@@ -33,7 +33,7 @@ export function useProjectFilters() {
           : sortBy === "projectName"
             ? "project"
             : sortBy === "dueDate"
-              ? "endDate"
+              ? "dueDate"
               : sortBy,
 
       order: "ASC" as const,

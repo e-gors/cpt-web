@@ -16,6 +16,8 @@ export const projectsApi = baseApi.injectEndpoints({
         url: "/projects",
         params,
       }),
+      // tells RTK this data is cacheable
+      providesTags: [{ type: "Projects", id: "LIST" }],
     }),
 
     createProject: builder.mutation<Project, Omit<Project, "id">>({
@@ -24,6 +26,8 @@ export const projectsApi = baseApi.injectEndpoints({
         method: "POST",
         body: project,
       }),
+      // THIS triggers refetch
+      invalidatesTags: [{ type: "Projects", id: "LIST" }],
     }),
 
     updateProject: builder.mutation<
@@ -35,6 +39,8 @@ export const projectsApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: project,
       }),
+      // THIS triggers refetch
+      invalidatesTags: [{ type: "Projects", id: "LIST" }],
     }),
 
     deleteProject: builder.mutation<void, number>({
@@ -42,6 +48,8 @@ export const projectsApi = baseApi.injectEndpoints({
         url: `/projects/${id}`,
         method: "DELETE",
       }),
+      // THIS triggers refetch
+      invalidatesTags: [{ type: "Projects", id: "LIST" }],
     }),
   }),
 });

@@ -22,6 +22,7 @@ export default function App() {
     projects,
     stats,
     isLoading,
+    refetch,
     createProject,
     updateProject,
     deleteProject,
@@ -39,6 +40,7 @@ export default function App() {
     }
 
     setEditing(undefined);
+    refetch(); // Refresh the list after saving
   }
 
   // ❌ DELETE
@@ -47,6 +49,7 @@ export default function App() {
 
     await deleteProject(deletingId);
     setDeletingId(null);
+    refetch(); // Refresh the list after deletion
   }
 
   const deletingProject = deletingId
@@ -95,8 +98,8 @@ export default function App() {
       {/* ⚠️ Delete Confirmation */}
       {deletingProject && (
         <ConfirmDialog
-          project="Delete Project"
-          description={`Are you sure you want to delete "${deletingProject.projectName}"?`}
+          project={deletingProject.project}
+          description={`Are you sure you want to delete "${deletingProject.project}"?`}
           onConfirm={handleDelete}
           onCancel={() => setDeletingId(null)}
         />

@@ -20,8 +20,8 @@ export default function ProjectStats({
 
   return (
     <div
-      className="grid grid-cols-2 gap-3"
-      style={{ gridTemplateColumns: "repeat(4, 1fr)" }}
+      className="grid grid-cols-2 lg:grid-cols-4 gap-3"
+      //   style={{ gridTemplateColumns: "repeat(4, 1fr)" }}
     >
       {stats.map((s) => (
         <div

@@ -6,7 +6,7 @@ import {
 } from "@/api/features/projects/projects.api";
 
 export function useProjects(queryParams = {}) {
-  const { data, isLoading, isFetching, isError } =
+  const { data, isLoading, refetch, isFetching, isError } =
     useGetProjectsQuery(queryParams);
 
   const [createProject] = useCreateProjectMutation();
@@ -23,6 +23,7 @@ export function useProjects(queryParams = {}) {
     },
 
     isLoading,
+    refetch,
     isFetching,
     isError,
 

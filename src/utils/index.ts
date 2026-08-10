@@ -1,9 +1,12 @@
 import type { Project } from "@/types";
 
-export const formatDate = (d: string) => {
-  if (!d) return "—";
-  const [y, m, day] = d.split("-");
-  return `${day}/${m}/${y}`;
+export const formatDate = (date: string) => {
+  if (!date) return "—";
+
+  const value = date.split("T")[0];
+  const [year, month, day] = value.split("-");
+
+  return `${day}/${month}/${year}`;
 };
 
 export const isOverdue = (p: Project) => {

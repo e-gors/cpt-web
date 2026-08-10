@@ -10,8 +10,8 @@ type Stats = {
 
 export interface Project {
   id: number;
-  clientName: string;
-  projectName: string;
+  client: string;
+  project: string;
   description: string;
   status: Status;
   priority: Priority;

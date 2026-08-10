@@ -38,6 +38,9 @@ export default function ConfirmDialog({
             Delete <strong style={{ color: "#f87171" }}>{project}</strong>? This
             cannot be undone.
           </p>
+          <p className="text-sm text-muted-foreground pt-2">
+            {description || "Are you sure you want to proceed?"}
+          </p>
         </div>
         <div className="flex justify-end gap-2">
           <button className="btn-ghost" onClick={onCancel}>

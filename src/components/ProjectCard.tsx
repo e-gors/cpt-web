@@ -31,7 +31,7 @@ export default function ProjectCard({
           className="text-xs tracking-widest uppercase truncate max-w-[60%]"
           style={{ fontFamily: "var(--font-mono)", color: "#555" }}
         >
-          {project.clientName}
+          {project.client}
         </span>
         <span
           className="text-xs font-semibold px-2 py-0.5 uppercase tracking-wider"
@@ -52,7 +52,7 @@ export default function ProjectCard({
           className="font-bold leading-tight text-base"
           style={{ color: "#efefef", fontSize: "1rem" }}
         >
-          {project.projectName}
+          {project.project}
         </h3>
         <p
           className="text-sm leading-relaxed overflow-hidden"

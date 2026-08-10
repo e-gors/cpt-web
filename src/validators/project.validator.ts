@@ -2,18 +2,21 @@ import { z } from "zod";
 
 export const projectSchema = z
   .object({
-    clientName: z.string().min(1, "Client name is required"),
-    projectName: z.string().min(1, "Project name is required"),
-    description: z.string().optional(),
+    client: z.string().min(1, "Client name is required"),
+    project: z.string().min(1, "Project name is required"),
+    description: z.string().min(1, "Description is required"),
     status: z.enum(["Planning", "In Progress", "Completed", "On Hold"]),
     priority: z.enum(["Low", "Medium", "High"]),
-    startDate: z.string().optional(),
-    dueDate: z.string().optional(),
+    startDate: z.string().min(1, "Start date is required"),
+    dueDate: z.string().min(1, "Due date is required"),
   })
   .refine(
     (data) => {
       if (data.startDate && data.dueDate) {
-        return data.dueDate >= data.startDate;
+        const start = new Date(data.startDate);
+        const due = new Date(data.dueDate);
+
+        return due >= start;
       }
       return true;
     },

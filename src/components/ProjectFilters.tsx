@@ -54,7 +54,7 @@ export default function ProjectFilters({
         style={{ width: "auto", minWidth: 140 }}
       >
         <option value="All">All Statuses</option>
-        <option value="Planned">Planned</option>
+        <option value="Planning">Planning</option>
         <option value="In Progress">In Progress</option>
         <option value="Completed">Completed</option>
       </select>
