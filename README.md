@@ -1,75 +1,69 @@
-# React + TypeScript + Vite
+# Client Project Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a lightweight web app for tracking client projects, statuses, priorities, and deadlines. I built it as a simple but polished internal tool with a clear dashboard and project management flow.
 
-Currently, two official plugins are available:
+## Setup instructions
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+1. Clone the repository and open it in your terminal.
+2. Install dependencies:
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+cp .env.example .env
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+3. Update the database values in the .env file so they match your local setup.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
 ```
+
+4. Start the development server:
+
+```bash
+npm run dev
+```
+
+5. Open the local URL shown in the terminal to view the app.
+
+## Technology choices
+
+I used React with TypeScript for the frontend because it keeps the UI structured and easier to maintain as the app grows. Vite was chosen for a fast development experience and lightweight build setup. Tailwind-style utility classes were used for layout and styling, with a custom theme to keep the design consistent and closer to the Figma direction I was following.
+
+## How to run the application
+
+From the project root, run:
+
+```bash
+cp .env.example .env
+npm install
+npm run dev
+```
+
+The app will be available locally in the browser via the Vite dev server URL.
+
+## Assumptions made
+
+- Created mockup data at first for easily evaluating the design and layouts.
+- The UI is designed to feel practical and clean rather than overly complex, since the main goal was to demonstrate project tracking clearly.
+
+## Technical reflection
+
+1. Why did you choose this implementation approach?
+
+I chose this approach because it keeps the app simple, fast to build, and easy to understand and maintain. React and TypeScript gave me strong and safety foundation for my UI. I also wanted the app feel polished without over-engineer it.
+
+2. What tradeoffs did you make?
+
+I prioritized the UI design and validation over behind actions but don't worry because I was able to add also the backend features to be able to connect with the frontend technologies that I've built. They can communicate each other but limited to the requirements given.
+
+3. What would you improve if given additional time?
+
+I would like to improve and optimize the fetching of data as well as in filters because it might crush if it has more than 10k data I guess but I added a limiter of 2 refetch cycle only also I can add some throttle in the api side if needed.
+
+4. What was the most challenging part of this assessment?
+
+The most challenging part of the assessment was the UI design at first since I don't have much talent when it comes to creating designs although I do have some basic understandings and principles but overall it was great experience.
+
+5. Did you use AI tools during development?
+
+Yes. I used Figma for the interface direction and ChatGPT for guidance, especially when refining the structure, component flow, and correcting the phrases and grammar for the project documentation. I used them as support tools rather than as a substitute for the final implementation.
