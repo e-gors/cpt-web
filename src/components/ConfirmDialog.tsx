@@ -1,0 +1,51 @@
+interface Props {
+  projectName: string;
+  onConfirm: () => void;
+  onCancel: () => void;
+}
+
+export default function ConfirmDialog({
+  projectName,
+  onConfirm,
+  onCancel,
+}: Props) {
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      style={{ background: "rgba(0,0,0,0.85)" }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onCancel();
+      }}
+    >
+      <div
+        className="w-full max-w-sm flex flex-col gap-4 p-6"
+        style={{ background: "#0e0e0e", border: "1px solid #3b0a0a" }}
+      >
+        <div className="flex flex-col gap-2">
+          <span
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.65rem",
+              color: "#f87171",
+              letterSpacing: "0.15em",
+            }}
+          >
+            // CONFIRM DELETE
+          </span>
+          <p style={{ color: "#efefef", fontSize: "0.9rem" }}>
+            Delete <strong style={{ color: "#f87171" }}>{projectName}</strong>?
+            This cannot be undone.
+          </p>
+        </div>
+        <div className="flex justify-end gap-2">
+          <button className="btn-ghost" onClick={onCancel}>
+            CANCEL
+          </button>
+          <button className="btn-danger" onClick={onConfirm}>
+            DELETE
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
