@@ -2,7 +2,7 @@ export type Status = "Planning" | "In Progress" | "On Hold" | "Completed";
 export type Priority = "Low" | "Medium" | "High";
 
 export interface Project {
-  id: string;
+  id: number;
   clientName: string;
   projectName: string;
   description: string;
