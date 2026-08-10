@@ -1,6 +1,13 @@
 export type Status = "Planning" | "In Progress" | "On Hold" | "Completed";
 export type Priority = "Low" | "Medium" | "High";
 
+type Stats = {
+  total: number;
+  inProgress: number;
+  highPriority: number;
+  overdue: number;
+};
+
 export interface Project {
   id: number;
   clientName: string;
@@ -10,6 +17,11 @@ export interface Project {
   priority: Priority;
   startDate: string;
   dueDate: string;
+}
+
+export interface ProjectResponse {
+  data: Project[];
+  stats: Stats;
 }
 
 export const STATUSES: Status[] = [

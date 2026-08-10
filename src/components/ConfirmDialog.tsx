@@ -1,11 +1,13 @@
 interface ConfirmDialogProps {
-  projectName: string;
+  project: string;
+  description?: string;
   onConfirm: () => void;
   onCancel: () => void;
 }
 
 export default function ConfirmDialog({
-  projectName,
+  project,
+  description,
   onConfirm,
   onCancel,
 }: ConfirmDialogProps) {
@@ -33,8 +35,8 @@ export default function ConfirmDialog({
             // CONFIRM DELETE
           </span>
           <p style={{ color: "#efefef", fontSize: "0.9rem" }}>
-            Delete <strong style={{ color: "#f87171" }}>{projectName}</strong>?
-            This cannot be undone.
+            Delete <strong style={{ color: "#f87171" }}>{project}</strong>? This
+            cannot be undone.
           </p>
         </div>
         <div className="flex justify-end gap-2">
