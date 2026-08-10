@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import type { Project } from "../types";
 import { STATUSES, PRIORITIES } from "../types";
 
-interface Props {
+interface ProjectFormProps {
   project?: Project | null;
   onSave: (data: Omit<Project, "id">) => void;
   onClose: () => void;
@@ -21,7 +21,11 @@ const BLANK: FormData = {
   dueDate: "",
 };
 
-export default function ProjectForm({ project, onSave, onClose }: Props) {
+export default function ProjectForm({
+  project,
+  onSave,
+  onClose,
+}: ProjectFormProps) {
   const [form, setForm] = useState<FormData>(BLANK);
   const [errors, setErrors] = useState<Errors>({});
 

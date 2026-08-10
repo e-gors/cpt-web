@@ -240,7 +240,7 @@ export default function App() {
           {/* Active filter chips */}
           {(filterStatus !== "All" || filterPriority !== "All" || search) && (
             <button
-              className="btn-ghost w-full xl:flex-none"
+              className="btn-ghost w-full xl:flex-none max-w-[5rem]"
               onClick={() => {
                 setSearch("");
                 setFilterStatus("All");

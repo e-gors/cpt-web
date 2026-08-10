@@ -1,4 +1,4 @@
-interface Props {
+interface ConfirmDialogProps {
   projectName: string;
   onConfirm: () => void;
   onCancel: () => void;
@@ -8,7 +8,7 @@ export default function ConfirmDialog({
   projectName,
   onConfirm,
   onCancel,
-}: Props) {
+}: ConfirmDialogProps) {
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"

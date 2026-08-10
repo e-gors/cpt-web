@@ -2,13 +2,17 @@ import { formatDate, isOverdue } from "@/utils";
 import type { Project } from "../types";
 import { STATUS_COLORS, PRIORITY_COLORS } from "../types";
 
-interface Props {
+interface ProjectCardProps {
   project: Project;
   onEdit: (project: Project) => void;
   onDelete: (id: string) => void;
 }
 
-export default function ProjectCard({ project, onEdit, onDelete }: Props) {
+export default function ProjectCard({
+  project,
+  onEdit,
+  onDelete,
+}: ProjectCardProps) {
   const sc = STATUS_COLORS[project.status];
   const pc = PRIORITY_COLORS[project.priority];
   const overdue = isOverdue(project);
