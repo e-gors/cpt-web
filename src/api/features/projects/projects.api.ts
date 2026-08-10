@@ -51,6 +51,12 @@ export const projectsApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+    deleteProject: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `/projects/${id}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
@@ -61,4 +67,5 @@ export const {
   useGetProjectsQuery,
   useCreateProjectMutation,
   useUpdateProjectMutation,
+  useDeleteProjectMutation,
 } = projectsApi;
